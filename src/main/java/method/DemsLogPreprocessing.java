@@ -43,10 +43,10 @@ public class DemsLogPreprocessing {
                     }
                 }
             }
-            /*for(Object x : array){
+            for(Object x : array){
                 JSONObject item = (JSONObject) x;
                 System.out.println(item.toString());
-            }*/
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

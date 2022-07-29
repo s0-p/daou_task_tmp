@@ -44,9 +44,12 @@ public class DagsLogPreprocessing {
                     }
                 }
             }
+            int i = 0;
             for(Object x : list){
+                i++;
                 System.out.println(x.toString());
             }
+            System.out.println(i);
 
         } catch (IOException e) {
             e.printStackTrace();
