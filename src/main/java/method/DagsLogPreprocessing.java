@@ -12,18 +12,21 @@ import java.util.List;
 public class DagsLogPreprocessing {
     public static DagsModel createDagsModel(String subStr) {
         DagsModel dagsModel = new DagsModel();
-        List<String> tmpList = new List<String>
-        tmpList = subStr.split(",");
-        dagsModel.setUrl(tmpList.get(0));
-        dagsModel.setCode(tmpList.get(1));
+        List<String> tmpList;
+
+        tmpList = List.of(subStr.split(", code:"));
+        dagsModel.setUrl(tmpList.get(0).substring(4));
+
+        tmpList = List.of(tmpList.get(1).split(",|:"));
+        dagsModel.setCode(tmpList.get(0));
         dagsModel.setTime(tmpList.get(2));
-        dagsModel.setMessage(tmpList.get(3));
-        dagsModel.setBody(tmpList.get(4));
+        dagsModel.setMessage(tmpList.get(4));
+        dagsModel.setBody(tmpList.get(6));
 
         return dagsModel;
     }
 
-    public static DagsModel readFile(String path) {
+    public static ArrayList readDags(String path) {
         ArrayList<DagsModel> list = new ArrayList<DagsModel>();
         File file = new File(path);
         String queueRecord = "[Feign Response] ";
@@ -49,6 +52,6 @@ public class DagsLogPreprocessing {
             e.printStackTrace();
         }
 
-        return null;
+        return list;
     }
 }
