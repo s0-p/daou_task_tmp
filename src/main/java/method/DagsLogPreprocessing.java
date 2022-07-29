@@ -44,8 +44,22 @@ public class DagsLogPreprocessing {
                     }
                 }
             }
-            for(Object x : list){
-                System.out.println(x.toString());
+            int i=0;
+            for(DagsModel x : list){
+                System.out.println("url : "+x.getUrl());
+                System.out.println("code : "+x.getCode());
+                System.out.println("time : "+x.getTime());
+                if(x.getMessage().equals("")){
+                    System.out.println("message : NULL");
+                }
+                else{
+                    System.out.println("message : " + x.getMessage());
+                }
+                System.out.println("body : "+x.getBody());
+                System.out.println();
+                i++;
+                System.out.println("-------------------------------------------------------------------------------------------"+i);
+                System.out.println();
             }
 
         } catch (IOException e) {
