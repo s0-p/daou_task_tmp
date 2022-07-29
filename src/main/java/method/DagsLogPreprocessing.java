@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DagsLogPreprocessing {
+/*public class DagsLogPreprocessing {
     public static DagsModel createDagsModel(String subStr) {
         DagsModel dagsModel = new DagsModel();
-        List<String> tmpList = new List<String>
-        tmpList = subStr.split(",");
+        List<String> tmpList;
+        tmpList = List.of(subStr.split(","));
         dagsModel.setUrl(tmpList.get(0));
         dagsModel.setCode(tmpList.get(1));
         dagsModel.setTime(tmpList.get(2));
@@ -51,4 +51,4 @@ public class DagsLogPreprocessing {
 
         return null;
     }
-}
+}*/
