@@ -26,8 +26,9 @@ public class ApiParser {
         return apiModel;
     }
 
-    public void readApi(String path) {
-        ArrayList<ApiModel> list = new ArrayList<ApiModel>();
+    public static ArrayList readLine(String path, String folder) {
+        ArrayList<ApiModel> subList = new ArrayList<ApiModel>();
+
         File file = new File(path);
         String queueRecord = "[Feign Response] ";
 
@@ -39,33 +40,60 @@ public class ApiParser {
 
                     int i = line.indexOf(queueRecord) + queueRecord.length();
                     if (i != -1) {
+                        String occurrenceTime = line.substring(0, 18);
                         String subStr = line.substring(i);
-                        list.add(createApiModel(subStr));
+
+                        ApiModel dagsModel = createApiModel(subStr);
+                        dagsModel.setOccurrence_time(occurrenceTime);
+                        dagsModel.setFolder(folder);
+                        subList.add(dagsModel);
                     }
                 }
             }
-            int i=0;
-            for(ApiModel x : list){
-                System.out.println("url : "+x.getUrl());
-                System.out.println("code : "+x.getCode());
-                System.out.println("time : "+x.getTime());
-                if(x.getMessage().equals("")){
-                    System.out.println("message : NULL");
-                }
-                else{
-                    System.out.println("message : " + x.getMessage());
-                }
-                System.out.println("body : "+x.getBody());
-                System.out.println();
-                i++;
-                System.out.println("-------------------------------------------------------------------------------------------"+i);
-                System.out.println();
-            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //return list;
+        return subList;
+    }
+
+    public static ArrayList readApi(String path) {
+        ArrayList<ApiModel> list = new ArrayList<ApiModel>();
+
+        String dags1Path = "C:/Users/User/Desktop/log/dags1/" + path;
+        list.addAll(readLine(dags1Path, "1"));
+
+        String dags2Path = "C:/Users/User/Desktop/log/dags1/" + path;
+        list.addAll(readLine(dags2Path, "2"));
+
+        /*Comparator<DagsModel> dagsModelComparator new Comparator<DagsModel>() {
+            @Override
+            public int compare(DagsModel o1, DagsModel o2) {
+                return o1.getOccurrence_time() - o2.getOccurrence_time();
+            }
+        }*/
+
+
+        int i=0;
+        for(ApiModel x : list){
+            System.out.println("url : "+x.getUrl());
+            System.out.println("code : "+x.getCode());
+            System.out.println("time : "+x.getTime());
+            if(x.getMessage().equals("")){
+                System.out.println("message : NULL");
+            }
+            else{
+                System.out.println("message : " + x.getMessage());
+            }
+            System.out.println("body : "+x.getBody());
+            System.out.println();
+            i++;
+            System.out.println("-------------------------------------------------------------------------------------------"+i);
+            System.out.println();
+        }
+
+
+
+        return list;
     }
 }

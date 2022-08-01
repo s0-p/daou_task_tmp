@@ -1,5 +1,6 @@
 package com.gwd.traceTool.method;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,7 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class EventParser {
-    public static JSONObject typeCastToJson(String subStr) {
+    public static JSONObject StringToJson(String subStr) {
         JSONParser parser = new JSONParser();
 
         try {
@@ -26,6 +27,39 @@ public class EventParser {
             throw new RuntimeException(e);
         }
     }
+
+    public static JSONArray readLine(String path, String folder) {
+        JSONArray subArray = new JSONArray();
+        File file = new File(path);
+        JSONObject currJson = new JSONObject();
+        String queueRecord = "receive message propertioes: MessageProperties";
+        String token = "receivemessage: ";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.contains(queueRecord)) {
+
+                    int i = line.indexOf(token) + token.length();
+                    if (i != -1) {
+                        String occurrenceTime = line.substring(0, 18);
+                        String subStr = line.substring(i);
+
+                        currJson = StringToJson(subStr);
+                        currJson.put("occurrenceTime", occurrenceTime);
+                        currJson.put("folder", folder);
+                        subArray.add(currJson);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return subArray;
+    }
+
     public static String getEventName(Map map){
         Map map2 = (Map)map.get("header");
         Map map3 = (Map)map2.get("event");
@@ -35,11 +69,6 @@ public class EventParser {
         Map map2 = (Map)map.get("header");
         Map map3 = (Map)map2.get("event");
         return (String)map3.get("createAt");
-    }
-    public static String getProvider(Map map){
-        Map map2 = (Map)map.get("header");
-        Map map3 = (Map)map2.get("event");
-        return (String)map3.get("provider");
     }
 
     public static String getTransactionId(Map map){
@@ -59,61 +88,49 @@ public class EventParser {
         return httpStatusCode;
     }
 
-
-    public static JSONArray readFile(String path) {
+    public static JSONArray readFile(String path) throws JsonProcessingException {
 
         JSONArray array = new JSONArray();
-        File file = new File(path);
-        String queueRecord = "receive message propertioes: MessageProperties";
-        String token = "receivemessage: ";
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
+        String dems1Path = "C:/Users/User/Desktop/log/dems1/trace/" + path;
+        array.addAll(readLine(dems1Path, "dems1"));
 
-            while ((line = br.readLine()) != null) {
-                if (line.contains(queueRecord)) {
 
-                    int i = line.indexOf(token) + token.length();
-                    if (i != -1) {
-                        String subStr = line.substring(i);
-                        array.add(typeCastToJson(subStr));
-                    }
-                }
+        String dems2Path = "C:/Users/User/Desktop/log/dems2/trace/" + path;
+        array.addAll(readLine(dems2Path, "dems2"));
+
+
+
+        /*for(Object x : array){
+                JSONObject item = (JSONObject) x;
+                System.out.println(item.toString());
+                System.out.println("---------------------------------------");
+                System.out.println(x);
+            }*/
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> parsingData = new HashMap<>();
+        int i =0;
+        for (Object x : array){
+            JSONObject jsonObject = (JSONObject) x;
+            Map map = mapper.readValue(jsonObject.toString(), Map.class);
+            parsingData.put("eventName",getEventName(map));
+            parsingData.put("createAt",getCreateAt(map));
+            parsingData.put("transactionId",getTransactionId(map));
+            parsingData.put("httpStatusCode",getStatusCode(map));
+
+            Iterator<String> iterator = parsingData.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                String value = (String)parsingData.get(key);
+                System.out.println("key : "+key);
+                System.out.println("value : "+value);
+                System.out.println();
             }
-//            for(Object x : array){
-//                JSONObject item = (JSONObject) x;
-//                System.out.println(item.toString());
-//                System.out.println("---------------------------------------");
-//                System.out.println(item[1]);
-//            }
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, String> parsingData = new HashMap<>();
-            int i =0;
-            for (Object x : array){
-                JSONObject jsonObject = (JSONObject) x;
-                Map map = mapper.readValue(jsonObject.toString(), Map.class);
-                parsingData.put("eventName",getEventName(map));
-                parsingData.put("createAt",getCreateAt(map));
-                parsingData.put("provider",getCreateAt(map));
-                parsingData.put("transactionId",getTransactionId(map));
-                parsingData.put("httpStatusCode",getStatusCode(map));
-
-                Iterator<String> iterator = parsingData.keySet().iterator();
-
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    String value = (String)parsingData.get(key);
-                    System.out.println("key : "+key);
-                    System.out.println("value : "+value);
-                    System.out.println();
-                }
-                i++;
-                System.out.println("-------------------------------------"+i);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            i++;
+            System.out.println("-------------------------------------"+i);
         }
+
         return array;
     }
 }
