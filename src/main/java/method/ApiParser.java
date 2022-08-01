@@ -1,6 +1,6 @@
 package method;
 
-import domain.DagsModel;
+import domain.ApiModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,25 +9,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DagsLogPreprocessing {
-    public static DagsModel createDagsModel(String subStr) {
-        DagsModel dagsModel = new DagsModel();
+public class ApiParser {
+    public static ApiModel createApiModel(String subStr) {
+        ApiModel apiModel = new ApiModel();
         List<String> tmpList;
 
         tmpList = List.of(subStr.split(", code:"));
-        dagsModel.setUrl(tmpList.get(0).substring(4));
+        apiModel.setUrl(tmpList.get(0).substring(4));
 
         tmpList = List.of(tmpList.get(1).split(",|:"));
-        dagsModel.setCode(tmpList.get(0));
-        dagsModel.setTime(tmpList.get(2));
-        dagsModel.setMessage(tmpList.get(4));
-        dagsModel.setBody(tmpList.get(6));
+        apiModel.setCode(tmpList.get(0));
+        apiModel.setTime(tmpList.get(2));
+        apiModel.setMessage(tmpList.get(4));
+        apiModel.setBody(tmpList.get(6));
 
-        return dagsModel;
+        return apiModel;
     }
 
-    public static ArrayList readDags(String path) {
-        ArrayList<DagsModel> list = new ArrayList<DagsModel>();
+    public ArrayList readApi(String path) {
+        ArrayList<ApiModel> list = new ArrayList<ApiModel>();
         File file = new File(path);
         String queueRecord = "[Feign Response] ";
 
@@ -40,12 +40,12 @@ public class DagsLogPreprocessing {
                     int i = line.indexOf(queueRecord) + queueRecord.length();
                     if (i != -1) {
                         String subStr = line.substring(i);
-                        list.add(createDagsModel(subStr));
+                        list.add(createApiModel(subStr));
                     }
                 }
             }
             int i=0;
-            for(DagsModel x : list){
+            for(ApiModel x : list){
                 System.out.println("url : "+x.getUrl());
                 System.out.println("code : "+x.getCode());
                 System.out.println("time : "+x.getTime());

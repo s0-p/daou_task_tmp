@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class DemsLogPreprocessing {
+public class EventParser {
     public static JSONObject typeCastToJson(String subStr) {
         JSONParser parser = new JSONParser();
 
@@ -35,6 +35,11 @@ public class DemsLogPreprocessing {
         Map map2 = (Map)map.get("header");
         Map map3 = (Map)map2.get("event");
         return (String)map3.get("createAt");
+    }
+    public static String getProvider(Map map){
+        Map map2 = (Map)map.get("header");
+        Map map3 = (Map)map2.get("event");
+        return (String)map3.get("provider");
     }
 
     public static String getTransactionId(Map map){
@@ -89,10 +94,12 @@ public class DemsLogPreprocessing {
                 Map map = mapper.readValue(jsonObject.toString(), Map.class);
                 parsingData.put("eventName",getEventName(map));
                 parsingData.put("createAt",getCreateAt(map));
+                parsingData.put("provider",getCreateAt(map));
                 parsingData.put("transactionId",getTransactionId(map));
                 parsingData.put("httpStatusCode",getStatusCode(map));
 
                 Iterator<String> iterator = parsingData.keySet().iterator();
+
                 while (iterator.hasNext()) {
                     String key = iterator.next();
                     String value = (String)parsingData.get(key);
