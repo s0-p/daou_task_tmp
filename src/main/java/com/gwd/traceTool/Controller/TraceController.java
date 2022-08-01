@@ -15,7 +15,7 @@ public class TraceController {
 
     @GetMapping("/api/analyze/trace-log")
     public String home(Model model){
-        String path = "C:/Users/User/Desktop/인턴과제_자료_20220722/dags1/dags_feign.2022-07-14.log";
+        String path = "dags_feign.2022-07-14.log";
 
 
 
