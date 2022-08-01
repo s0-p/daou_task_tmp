@@ -6,5 +6,17 @@
 </head>
 <body>
     <h2>hello, world!</h2>
+    <form action="/api/analyze/trace-log" method="post">
+        <input type="date" name="fileDate" id="fileDate" />
+        <button type="submit" id="btn">submit</button>
+    </form>
 </body>
 </html>
+
+<script>
+    btn = document.querySelector("#btn");
+    btn.addEventListener("click", function() {
+        console.log(document.querySelector("#fileDate").value);
+    });
+
+</script>
