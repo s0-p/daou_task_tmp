@@ -3,6 +3,8 @@ package com.gwd.traceTool.method;
 import com.gwd.traceTool.domain.ApiModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ApiAnalysis {
 
@@ -24,6 +26,17 @@ public class ApiAnalysis {
     //public static 문자열 분리 함수
 
     // api 종류 별, 목적지 host 별, port number 별
+
+    public ArrayList<String> getCodeNum(ArrayList<ApiModel> array){
+        String code;
+        Map<String,String> = new HashMap<String,String>();
+        for(int i=0; i<array.size();i++){
+//           System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
+            code = array.get(i).getCode();
+
+        }
+
+    }
 
     public static void arrayPrint(ArrayList<ApiModel> array){
         int i=0;
