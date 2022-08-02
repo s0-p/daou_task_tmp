@@ -1,10 +1,13 @@
 package com.gwd.traceTool.domain;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 
 @ToString
-public class ApiModel {
-    private String occurrence_time;
+public class ApiModel implements Comparable<ApiModel>{
+    private LocalDateTime occurrence_time;
     private String folder;
     private String url;
     private String code;
@@ -12,11 +15,11 @@ public class ApiModel {
     private String message;
     private String body;
 
-    public String getOccurrence_time() {
+    public LocalDateTime getOccurrence_time() {
         return occurrence_time;
     }
 
-    public void setOccurrence_time(String occurrence_time) {
+    public void setOccurrence_time(LocalDateTime occurrence_time) {
         this.occurrence_time = occurrence_time;
     }
 
@@ -66,5 +69,9 @@ public class ApiModel {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public int compareTo(ApiModel o) {
+        return this.occurrence_time.compareTo(o.getOccurrence_time());
     }
 }
