@@ -66,31 +66,23 @@ public class ApiParser {
         String dags2Path = "C:/Users/User/Desktop/log/dags1/" + path;
         list.addAll(readLine(dags2Path, "2"));
 
-        /*Comparator<DagsModel> dagsModelComparator new Comparator<DagsModel>() {
-            @Override
-            public int compare(DagsModel o1, DagsModel o2) {
-                return o1.getOccurrence_time() - o2.getOccurrence_time();
-            }
-        }*/
-
-
-        int i=0;
-        for(ApiModel x : list){
-            System.out.println("url : "+x.getUrl());
-            System.out.println("code : "+x.getCode());
-            System.out.println("time : "+x.getTime());
-            if(x.getMessage().equals("")){
-                System.out.println("message : NULL");
-            }
-            else{
-                System.out.println("message : " + x.getMessage());
-            }
-            System.out.println("body : "+x.getBody());
-            System.out.println();
-            i++;
-            System.out.println("-------------------------------------------------------------------------------------------"+i);
-            System.out.println();
-        }
+//        int i=0;
+//        for(ApiModel x : list){
+//            System.out.println("url : "+x.getUrl());
+//            System.out.println("code : "+x.getCode());
+//            System.out.println("time : "+x.getTime());
+//            if(x.getMessage().equals("")){
+//                System.out.println("message : NULL");
+//            }
+//            else{
+//                System.out.println("message : " + x.getMessage());
+//            }
+//            System.out.println("body : "+x.getBody());
+//            System.out.println();
+//            i++;
+//            System.out.println("-------------------------------------------------------------------------------------------"+i);
+//            System.out.println();
+//        }
 
 
 
