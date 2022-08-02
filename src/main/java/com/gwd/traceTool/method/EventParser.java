@@ -96,7 +96,7 @@ public class EventParser {
     }
 
 
-        public static JSONArray readEvent(String path) throws JsonProcessingException {
+        public JSONArray readEvent(String path) throws JsonProcessingException{
 
         JSONArray array = new JSONArray();
 

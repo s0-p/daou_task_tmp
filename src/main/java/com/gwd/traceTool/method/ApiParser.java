@@ -62,7 +62,7 @@ public class ApiParser {
         return subList;
     }
 
-    public static List readApi(String path) {
+    public ArrayList readApi(String path) {
         ArrayList<ApiModel> list = new ArrayList<ApiModel>();
 
         String dags1Path = "C:/Users/User/Desktop/log/dags1/" + path;
