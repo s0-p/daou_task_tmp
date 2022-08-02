@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Controller
 public class TraceController {
     EventParser eventParser;
-    ApiParser ApiParser;
+    ApiParser apiParser;
 
     @GetMapping("/api/analyze/trace-log")
 
@@ -39,6 +39,7 @@ public class TraceController {
     public String read(FileDateDTO fileDateDTO, Model model){
         String fileDate = fileDateDTO.getFileDate();  // POST request로 받은 date input value
         String fileName = "dags_feign." + fileDate+".log";
+
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
         ApiAnalysis apiAnalysis = new ApiAnalysis();
