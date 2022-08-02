@@ -48,10 +48,10 @@ public class ApiParser {
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
 
-                        ApiModel dagsModel = createApiModel(subStr);
-                        dagsModel.setOccurrence_time(occurrenceTime);
-                        dagsModel.setFolder(folder);
-                        subList.add(dagsModel);
+                        ApiModel apiModel = createApiModel(subStr);
+                        apiModel.setOccurrence_time(occurrenceTime);
+                        apiModel.setFolder(folder);
+                        subList.add(apiModel);
                     }
                 }
             }

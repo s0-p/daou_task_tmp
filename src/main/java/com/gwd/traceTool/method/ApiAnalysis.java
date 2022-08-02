@@ -9,30 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ApiAnalysis {
-
-    //ArrayList<ApiModel> array;
-
-//    public ApiAnalysis(ArrayList<ApiModel> array) { // ApiAnalysis 생성 되면서 분석됨
-//        this.array = array;
-//    }
-
-
     public void analysis(ArrayList<ApiModel> array){ //분석
         arrayPrint(array);
 
         Map<String, Integer> hostMap = new HashMap<>();
         Map<String, Integer> portMap = new HashMap<>();
         Map<String, Integer> apiMap = new HashMap<>();
+        Map<String, Integer> codeMap = new HashMap<>();
+        String url;
 
         for(int i=0; i<array.size();i++){
-//            System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
-            String url = array.get(i).getUrl();
+            url = array.get(i).getUrl();
             Map<String, String> urlMap = splitUrl(url);
 
-            String destinationHost = urlMap.get("destinationHost");
-            String port = urlMap.get("port");
-            String apiType = urlMap.get("apiType");
-
+            String destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
+            String port = urlMap.get("port");  // ex) 8443
+            String apiType = urlMap.get("apiType"); // ex) /api/setting/service/domain/save
+            String code = array.get(i).getCode();
 
             int count = 0;
 
@@ -65,6 +58,13 @@ public class ApiAnalysis {
             }
             apiMap.put(apiType, count);
 
+            if(codeMap.containsKey(code)){
+                count = codeMap.get(code) + 1;
+            }
+            else {
+                count = 1;
+            }
+            codeMap.put(code,count);
 
         }
         for( String strKey : hostMap.keySet() ){
@@ -83,9 +83,12 @@ public class ApiAnalysis {
             int strValue = apiMap.get(strKey);
             System.out.println( strKey +":"+ strValue );
         }
+        System.out.println( "--------------------------------------------------" );
+        for( String strKey : codeMap.keySet() ){
+            int strValue = codeMap.get(strKey);
+            System.out.println( strKey +":"+ strValue );
+        }
     }
-
-    //public static 문자열 분리 함수
     public static Map<String, String> splitUrl(String url) {
         String[] tmpList = url.split(":");
 
@@ -128,6 +131,12 @@ public class ApiAnalysis {
                 System.out.println("message : " + x.getMessage());
             }
             System.out.println("body : "+x.getBody());
+//            try {
+//                System.out.println("folder : "+x.getFolder());
+//            }
+//            catch (NullPointerException e){
+//                System.out.println("folder : NULL");
+//            }
             System.out.println();
             i++;
             System.out.println("-------------------------------------------------------------------------------------------"+i);

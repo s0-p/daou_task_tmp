@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class TraceController {
     EventParser eventParser;
     ApiParser apiParser;
-
+    ApiAnalysis apiAnalysis;
     @GetMapping("/api/analyze/trace-log")
 
     public String home(){
@@ -42,7 +42,7 @@ public class TraceController {
 
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
-        ApiAnalysis apiAnalysis = new ApiAnalysis();
+        apiAnalysis = new ApiAnalysis();
         apiAnalysis.analysis(array);
         // apiAnalysis.array는 나중에 사용가능
         model.addAttribute("array",array);
