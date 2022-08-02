@@ -37,14 +37,14 @@ public class TraceController {
 
     @PostMapping("/api/analyze/trace-log")
     public String read(FileDateDTO fileDateDTO, Model model){
-        // String data; (get에서 들어온 날짜 인자값)
-        // [GET] http://localhost:8080/api/analyze/trace-log?date=20220722
-        String fileDate = fileDateDTO.getFileDate();
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!date : "+fileDate);
-        //String fileDate = "dags_feign."+date.substring(0, 3) + '-' + date.substring(4, 5) + '-' + date.substring(6, 7) + ".log";
+        String fileDate = fileDateDTO.getFileDate();  // POST request로 받은 date input value
         String fileName = "dags_feign." + fileDate+".log";
-        ArrayList<ApiModel> arr = apiParser.readApi(fileName);
-        model.addAttribute("arr",arr);
+
+        ArrayList<ApiModel> array = apiParser.readApi(fileName);
+        ApiAnalysis apiAnalysis = new ApiAnalysis();
+        apiAnalysis.analysis(array);
+        // apiAnalysis.array는 나중에 사용가능
+        model.addAttribute("array",array);
             return "apiPost";
     }
 }

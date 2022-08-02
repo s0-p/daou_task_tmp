@@ -71,6 +71,7 @@ public class ApiParser {
         String dags2Path = "C:/Users/User/Desktop/log/dags2/" + path;
         list.addAll(readLine(dags2Path, "2"));
 
+
         Collections.sort(list);
 
         int i=0;
