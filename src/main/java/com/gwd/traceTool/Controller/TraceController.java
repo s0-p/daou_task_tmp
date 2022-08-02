@@ -1,5 +1,6 @@
 package com.gwd.traceTool.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gwd.traceTool.domain.ApiModel;
 import com.gwd.traceTool.domain.FileDateDTO;
 import com.gwd.traceTool.method.*;
@@ -13,14 +14,22 @@ import java.util.ArrayList;
 @Controller
 public class TraceController {
     EventParser eventParser;
-    ApiParser apiParser;
+    ApiParser ApiParser;
 
     @GetMapping("/api/analyze/trace-log")
-    public String home(){
-        String path = "dags_feign.2022-07-14.log";
 
+    public String home(){
+        /*String path = "dags_feign.2022-07-14.log";
         apiParser = new ApiParser();
-        apiParser.readApi(path);
+        apiParser.readApi(path);*/
+        String path = "dems.2022-07-14.log";
+        eventParser = new EventParser();
+        try {
+            eventParser.readEvent(path);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
 
         return "home";
     }

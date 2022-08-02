@@ -6,8 +6,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ApiParser {
     public static ApiModel createApiModel(String subStr) {
@@ -40,7 +43,9 @@ public class ApiParser {
 
                     int i = line.indexOf(queueRecord) + queueRecord.length();
                     if (i != -1) {
-                        String occurrenceTime = line.substring(0, 18);
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
 
                         ApiModel dagsModel = createApiModel(subStr);
@@ -57,22 +62,16 @@ public class ApiParser {
         return subList;
     }
 
-    public ArrayList readApi(String path) {
+    public static List readApi(String path) {
         ArrayList<ApiModel> list = new ArrayList<ApiModel>();
 
         String dags1Path = "C:/Users/User/Desktop/log/dags1/" + path;
         list.addAll(readLine(dags1Path, "1"));
 
-        String dags2Path = "C:/Users/User/Desktop/log/dags1/" + path;
+        String dags2Path = "C:/Users/User/Desktop/log/dags2/" + path;
         list.addAll(readLine(dags2Path, "2"));
 
-        /*Comparator<DagsModel> dagsModelComparator new Comparator<DagsModel>() {
-            @Override
-            public int compare(DagsModel o1, DagsModel o2) {
-                return o1.getOccurrence_time() - o2.getOccurrence_time();
-            }
-        }*/
-
+        Collections.sort(list);
 
         int i=0;
         for(ApiModel x : list){
@@ -92,8 +91,11 @@ public class ApiParser {
             System.out.println();
         }
 
+        for (ApiModel x: list) {
 
+            System.out.println(x.getOccurrence_time());
 
+        }
         return list;
     }
 }
