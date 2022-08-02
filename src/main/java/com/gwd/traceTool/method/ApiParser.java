@@ -62,7 +62,7 @@ public class ApiParser {
         return subList;
     }
 
-    public ArrayList readApi(String path) {
+    public static ArrayList readApi(String path) {
         ArrayList<ApiModel> list = new ArrayList<ApiModel>();
 
         String dags1Path = "C:/Users/User/Desktop/log/dags1/" + path;
@@ -74,7 +74,7 @@ public class ApiParser {
 
         Collections.sort(list);
 
-        int i=0;
+        /*int i=0;
         for(ApiModel x : list){
             System.out.println("url : "+x.getUrl());
             System.out.println("code : "+x.getCode());
@@ -96,7 +96,7 @@ public class ApiParser {
 
             System.out.println(x.getOccurrence_time());
 
-        }
+        }*/
         return list;
     }
 }

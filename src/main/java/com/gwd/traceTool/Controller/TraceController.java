@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gwd.traceTool.domain.ApiModel;
 import com.gwd.traceTool.domain.FileDateDTO;
 import com.gwd.traceTool.method.*;
-import lombok.SneakyThrows;
-import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +22,7 @@ public class TraceController {
         /*String path = "dags_feign.2022-07-14.log";
         apiParser = new ApiParser();
         apiParser.readApi(path);*/
-        String path = "dems.2022-07-15.log";
+        String path = "dems.2022-07-14.log";
         eventParser = new EventParser();
 //        try {
 //            eventParser.readEvent(path);
@@ -37,14 +35,13 @@ public class TraceController {
     }
 
 
-    @SneakyThrows
     @PostMapping("/api/analyze/trace-log")
     public String read(FileDateDTO fileDateDTO, Model model){
         String fileDate = fileDateDTO.getFileDate();  // POST request로 받은 date input value
         String fileName = "dags_feign." + fileDate+".log";
-        apiParser = new ApiParser();
-        ArrayList<ApiModel> array = apiParser.readApi(fileName);
 
+
+        ArrayList<ApiModel> array = apiParser.readApi(fileName);
         ApiAnalysis apiAnalysis = new ApiAnalysis();
         apiAnalysis.analysis(array);
         // apiAnalysis.array는 나중에 사용가능
