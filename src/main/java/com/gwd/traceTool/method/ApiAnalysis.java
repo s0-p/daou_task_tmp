@@ -104,6 +104,17 @@ public class ApiAnalysis {
 
     // api 종류 별, 목적지 host 별, port number 별
 
+//    public ArrayList<String> getCodeNum(ArrayList<ApiModel> array){
+//        String code;
+//
+//        for(int i=0; i<array.size();i++){
+////           System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
+//            code = array.get(i).getCode();
+//
+//        }
+//        return array;
+//    }
+
     public static void arrayPrint(ArrayList<ApiModel> array){
         int i=0;
         for(ApiModel x : array){
