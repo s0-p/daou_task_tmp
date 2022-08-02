@@ -11,9 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class EventParser {
     public static JSONObject StringToJson(String subStr) {
@@ -43,7 +41,7 @@ public class EventParser {
 
                     int i = line.indexOf(token) + token.length();
                     if (i != -1) {
-                        String occurrenceTime = line.substring(0, 18);
+                        String occurrenceTime = line.substring(0, 22);
                         String subStr = line.substring(i);
 
                         currJson = StringToJson(subStr);
@@ -88,7 +86,17 @@ public class EventParser {
         return httpStatusCode;
     }
 
-    public static JSONArray readFile(String path) throws JsonProcessingException {
+    static class JSONComparator implements Comparator<JSONObject> {
+        @Override
+        public int compare(JSONObject o1, JSONObject o2) {
+            String v1 = o1.get("occurrenceTime").toString();
+            String v3 = o2.get("occurrenceTime").toString();
+            return v1.compareTo(v3);
+        }
+    }
+
+
+        public static JSONArray readEvent(String path) throws JsonProcessingException {
 
         JSONArray array = new JSONArray();
 
@@ -99,14 +107,7 @@ public class EventParser {
         String dems2Path = "C:/Users/User/Desktop/log/dems2/trace/" + path;
         array.addAll(readLine(dems2Path, "dems2"));
 
-
-
-        /*for(Object x : array){
-                JSONObject item = (JSONObject) x;
-                System.out.println(item.toString());
-                System.out.println("---------------------------------------");
-                System.out.println(x);
-            }*/
+        Collections.sort(array, new JSONComparator());
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> parsingData = new HashMap<>();
@@ -130,6 +131,12 @@ public class EventParser {
             i++;
             System.out.println("-------------------------------------"+i);
         }
+
+        /*for(Object x : array){
+                JSONObject item = (JSONObject) x;
+                System.out.println(item.get("occurrenceTime"));
+                System.out.println("---------------------------------------");
+        }*/
 
         return array;
     }
