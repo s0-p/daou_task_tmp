@@ -6,6 +6,24 @@ import java.util.ArrayList;
 
 public class ApiAnalysis {
 
+    //ArrayList<ApiModel> array;
+
+//    public ApiAnalysis(ArrayList<ApiModel> array) { // ApiAnalysis 생성 되면서 분석됨
+//        this.array = array;
+//    }
+
+
+    public void analysis(ArrayList<ApiModel> array){ //분석
+        arrayPrint(array);
+        for(int i=0; i<array.size();i++){
+//            System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
+            String url = array.get(i).getUrl();
+        }
+    }
+
+    //public static 문자열 분리 함수
+
+    // api 종류 별, 목적지 host 별, port number 별
 
     public static void arrayPrint(ArrayList<ApiModel> array){
         int i=0;
@@ -25,11 +43,6 @@ public class ApiAnalysis {
             System.out.println("-------------------------------------------------------------------------------------------"+i);
             System.out.println();
         }
-    }
-
-    public ArrayList<ApiModel> analysis(ArrayList<ApiModel> array){
-        arrayPrint(array);
-        return array;
     }
 
 }
