@@ -15,7 +15,9 @@ import java.util.Map;
 public class TraceController {
     EventParser eventParser;
     ApiParser apiParser;
+    ApiAnalysis apiAnalysis;
 
+    Map<String , Map> dataMap;
     @GetMapping("/api/analyze/trace-log")
 
     public String home(){
@@ -44,8 +46,12 @@ public class TraceController {
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
         ApiAnalysis apiAnalysis = new ApiAnalysis();
         Map dataMap = apiAnalysis.analysis(array);
-        // apiAnalysis.array는 나중에 사용가능
+        /* 
         model.addAttribute("dataMap",dataMap);
             return "apiPost";
+
+         */
+        model.addAttribute("dataMap",dataMap);
+            return "statics";
     }
 }

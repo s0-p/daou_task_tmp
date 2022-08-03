@@ -12,7 +12,6 @@ public class ApiAnalysis {
 
         Map<String, Map> apiMap = dataMap.get("api");
         for (Map.Entry<String, Map> entry : apiMap.entrySet()) {
-
             String key = entry.getKey();
             Map<String, Integer> value = entry.getValue();
 
@@ -23,7 +22,6 @@ public class ApiAnalysis {
                     totalTime = totalTime + Integer.parseInt(model.getTime());
                 }
             }
-
             int AvgTime = totalTime / value.get("count");
             value.put("avgTime", AvgTime);
 
@@ -59,7 +57,6 @@ public class ApiAnalysis {
         else {                        // map안에 key가 없다면 최초 삽입
             return 1;
         }
-
     }
 
     public static Map analysis(ArrayList<ApiModel> array) {
@@ -80,6 +77,7 @@ public class ApiAnalysis {
             String apiType = urlMap.get("apiType");                  // ex) /api/setting/service/domain/save
             String code = array.get(i).getCode();                    // ex) 400
             String dags = array.get(i).getFolder();                  // ex) 1
+
 
 
             //  목적지 host 별
