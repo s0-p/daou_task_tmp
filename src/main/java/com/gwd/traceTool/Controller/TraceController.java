@@ -24,11 +24,11 @@ public class TraceController {
         apiParser.readApi(path);*/
         String path = "dems.2022-07-14.log";
         eventParser = new EventParser();
-        try {
-            eventParser.readEvent(path);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            eventParser.readEvent(path);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
         return "home";
