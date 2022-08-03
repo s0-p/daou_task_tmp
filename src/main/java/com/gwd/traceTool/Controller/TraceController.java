@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 public class TraceController {
     EventParser eventParser;
     ApiParser apiParser;
     ApiAnalysis apiAnalysis;
+
+    Map<String , Map> dataMap;
     @GetMapping("/api/analyze/trace-log")
 
     public String home(){
@@ -43,9 +46,13 @@ public class TraceController {
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
         apiAnalysis = new ApiAnalysis();
-        apiAnalysis.analysis(array);
-        // apiAnalysis.array는 나중에 사용가능
+        dataMap = apiAnalysis.analysis(array);
+        /*
         model.addAttribute("array",array);
             return "apiPost";
+
+         */
+        model.addAttribute("dataMap",dataMap);
+            return "statics";
     }
 }
