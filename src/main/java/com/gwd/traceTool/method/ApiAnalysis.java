@@ -15,8 +15,36 @@ public class ApiAnalysis {
 //    }
 
 
-    public Map analysis(ArrayList<ApiModel> array){ //분석
+    public void analysis(ArrayList<ApiModel> array){ //분석
         arrayPrint(array);
+
+        //saveInMap()
+    }
+
+    //public static 문자열 분리 함수
+    public static Map<String, String> splitUrl(String url) {
+        String[] tmpList = url.split(":");
+
+        String destinationHost = tmpList[1].substring(2);
+        String port = tmpList[2].substring(0, 4);
+        String apiType = tmpList[2].substring(4);
+
+        if(apiType.contains("OPERATION")) {
+            int index = apiType.indexOf("/OPERATION");
+            apiType = apiType.substring(0, index);
+        }
+
+        Map<String, String> urlMap = new HashMap<>();
+        urlMap.put("destinationHost", destinationHost);
+        urlMap.put("port", port);
+        urlMap.put("apiType", apiType);
+
+        return urlMap;
+
+    }
+
+    // api 종류 별, 목적지 host 별, port number 별
+    public static Map saveInMap(ArrayList<ApiModel> array) {
 
         Map<String, Map> urlMap = new HashMap<>();
         Map<String, Integer> hostMap = new HashMap<>();
@@ -24,14 +52,12 @@ public class ApiAnalysis {
         Map<String, Integer> apiMap = new HashMap<>();
 
         for(int i=0; i<array.size();i++){
-//            System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
             String url = array.get(i).getUrl();
             Map<String, String> tmpMap = splitUrl(url);
 
             String destinationHost = tmpMap.get("destinationHost");
             String port = tmpMap.get("port");
             String apiType = tmpMap.get("apiType");
-
 
             int count = 0;
 
@@ -75,49 +101,8 @@ public class ApiAnalysis {
             System.out.println( strKey +":"+ strValue );
         }
 
-        /*for( String strKey : hostMap.keySet() ){
-            int strValue = hostMap.get(strKey);
-            System.out.println( strKey +":"+ strValue );
-        }
-
-        System.out.println( "--------------------------------------------------" );
-        for( String strKey : portMap.keySet() ){
-            int strValue = portMap.get(strKey);
-            System.out.println( strKey +":"+ strValue );
-        }
-
-        System.out.println( "--------------------------------------------------" );
-        for( String strKey : apiMap.keySet() ){
-            int strValue = apiMap.get(strKey);
-            System.out.println( strKey +":"+ strValue );
-        }*/
-
         return urlMap;
     }
-
-    //public static 문자열 분리 함수
-    public static Map<String, String> splitUrl(String url) {
-        String[] tmpList = url.split(":");
-
-        String destinationHost = tmpList[1].substring(2);
-        String port = tmpList[2].substring(0, 4);
-        String apiType = tmpList[2].substring(4);
-
-        if(apiType.contains("OPERATION")) {
-            int index = apiType.indexOf("/OPERATION");
-            apiType = apiType.substring(0, index);
-        }
-
-        Map<String, String> urlMap = new HashMap<>();
-        urlMap.put("destinationHost", destinationHost);
-        urlMap.put("port", port);
-        urlMap.put("apiType", apiType);
-
-        return urlMap;
-
-    }
-
-    // api 종류 별, 목적지 host 별, port number 별
 
     public static void arrayPrint(ArrayList<ApiModel> array){
         int i=0;
