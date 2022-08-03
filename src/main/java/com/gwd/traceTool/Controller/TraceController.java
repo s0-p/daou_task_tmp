@@ -45,10 +45,10 @@ public class TraceController {
 
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
-        apiAnalysis = new ApiAnalysis();
-        dataMap = apiAnalysis.analysis(array);
-        /*
-        model.addAttribute("array",array);
+        ApiAnalysis apiAnalysis = new ApiAnalysis();
+        Map dataMap = apiAnalysis.analysis(array);
+        /* 
+        model.addAttribute("dataMap",dataMap);
             return "apiPost";
 
          */
