@@ -1,9 +1,7 @@
 package com.gwd.traceTool.method;
 
 import com.gwd.traceTool.domain.ApiModel;
-import org.w3c.dom.css.Counter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +15,10 @@ public class ApiAnalysis {
 //    }
 
 
-    public void analysis(ArrayList<ApiModel> array){ //분석
+    public Map analysis(ArrayList<ApiModel> array){ //분석
         arrayPrint(array);
 
+        Map<String, Map> urlMap = new HashMap<>();
         Map<String, Integer> hostMap = new HashMap<>();
         Map<String, Integer> portMap = new HashMap<>();
         Map<String, Integer> apiMap = new HashMap<>();
@@ -27,11 +26,11 @@ public class ApiAnalysis {
         for(int i=0; i<array.size();i++){
 //            System.out.println("!!!!!!!!!!!!!!!!!url: "+array.get(i).getUrl());
             String url = array.get(i).getUrl();
-            Map<String, String> urlMap = splitUrl(url);
+            Map<String, String> tmpMap = splitUrl(url);
 
-            String destinationHost = urlMap.get("destinationHost");
-            String port = urlMap.get("port");
-            String apiType = urlMap.get("apiType");
+            String destinationHost = tmpMap.get("destinationHost");
+            String port = tmpMap.get("port");
+            String apiType = tmpMap.get("apiType");
 
 
             int count = 0;
@@ -67,7 +66,16 @@ public class ApiAnalysis {
 
 
         }
-        for( String strKey : hostMap.keySet() ){
+        urlMap.put("destinationHost", hostMap);
+        urlMap.put("port", portMap);
+        urlMap.put("api", apiMap);
+
+        for( String strKey : urlMap.keySet() ){
+            Map strValue = urlMap.get(strKey);
+            System.out.println( strKey +":"+ strValue );
+        }
+
+        /*for( String strKey : hostMap.keySet() ){
             int strValue = hostMap.get(strKey);
             System.out.println( strKey +":"+ strValue );
         }
@@ -82,7 +90,9 @@ public class ApiAnalysis {
         for( String strKey : apiMap.keySet() ){
             int strValue = apiMap.get(strKey);
             System.out.println( strKey +":"+ strValue );
-        }
+        }*/
+
+        return urlMap;
     }
 
     //public static 문자열 분리 함수
@@ -92,6 +102,11 @@ public class ApiAnalysis {
         String destinationHost = tmpList[1].substring(2);
         String port = tmpList[2].substring(0, 4);
         String apiType = tmpList[2].substring(4);
+
+        if(apiType.contains("OPERATION")) {
+            int index = apiType.indexOf("/OPERATION");
+            apiType = apiType.substring(0, index);
+        }
 
         Map<String, String> urlMap = new HashMap<>();
         urlMap.put("destinationHost", destinationHost);
