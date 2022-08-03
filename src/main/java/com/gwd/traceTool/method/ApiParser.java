@@ -13,18 +13,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ApiParser {
-    public static ApiModel createApiModel(String subStr) {
+    public static ApiModel createApiModel(String subStr, String folder) {
         ApiModel apiModel = new ApiModel();
         List<String> tmpList;
 
         tmpList = List.of(subStr.split(", code:"));
         apiModel.setUrl(tmpList.get(0).substring(4));
-
         tmpList = List.of(tmpList.get(1).split(",|:"));
+
         apiModel.setCode(tmpList.get(0));
         apiModel.setTime(tmpList.get(2));
         apiModel.setMessage(tmpList.get(4));
         apiModel.setBody(tmpList.get(6));
+        apiModel.setFolder(folder);
 
         return apiModel;
     }
@@ -48,9 +49,8 @@ public class ApiParser {
                         LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                         String subStr = line.substring(i);
 
-                        ApiModel apiModel = createApiModel(subStr);
+                        ApiModel apiModel = createApiModel(subStr, folder);
                         apiModel.setOccurrence_time(occurrenceTime);
-                        apiModel.setFolder(folder);
                         subList.add(apiModel);
                     }
                 }
@@ -70,6 +70,7 @@ public class ApiParser {
 
         String dags2Path = "C:/Users/User/Desktop/log/dags2/" + path;
         list.addAll(readLine(dags2Path, "2"));
+
 
 
         Collections.sort(list);

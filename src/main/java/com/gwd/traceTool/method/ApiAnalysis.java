@@ -16,16 +16,22 @@ public class ApiAnalysis {
         Map<String, Integer> portMap = new HashMap<>();
         Map<String, Integer> apiMap = new HashMap<>();
         Map<String, Integer> codeMap = new HashMap<>();
+        Map<String, String> urlMap;
+
         String url;
+        String destinationHost;
+        String port;
+        String apiType;
+        String code;
 
         for(int i=0; i<array.size();i++){
             url = array.get(i).getUrl();
-            Map<String, String> urlMap = splitUrl(url);
+            urlMap = splitUrl(url); // url을 split해서 map으로 반환
 
-            String destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
-            String port = urlMap.get("port");  // ex) 8443
-            String apiType = urlMap.get("apiType"); // ex) /api/setting/service/domain/save
-            String code = array.get(i).getCode();
+            destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
+            port = urlMap.get("port");  // ex) 8443
+            apiType = urlMap.get("apiType"); // ex) /api/setting/service/domain/save
+            code = array.get(i).getCode();
 
             int count = 0;
 
@@ -102,7 +108,11 @@ public class ApiAnalysis {
         urlMap.put("apiType", apiType);
 
         return urlMap;
+    }
 
+    public static Map<String, String> getAverageTime(Map apiMap){
+        // api 종류별 구분 함수(apiMap)
+        //
     }
 
     // api 종류 별, 목적지 host 별, port number 별
@@ -118,7 +128,7 @@ public class ApiAnalysis {
 //        return array;
 //    }
 
-    public static void arrayPrint(ArrayList<ApiModel> array){
+    public static void arrayPrint(ArrayList<ApiModel> array){ // for debugging
         int i=0;
         for(ApiModel x : array){
             System.out.println("url : "+x.getUrl());
@@ -131,12 +141,12 @@ public class ApiAnalysis {
                 System.out.println("message : " + x.getMessage());
             }
             System.out.println("body : "+x.getBody());
-//            try {
-//                System.out.println("folder : "+x.getFolder());
-//            }
-//            catch (NullPointerException e){
-//                System.out.println("folder : NULL");
-//            }
+            try {
+                System.out.println("folder : "+x.getFolder());
+            }
+            catch (NullPointerException e){
+                System.out.println("folder : NULL");
+            }
             System.out.println();
             i++;
             System.out.println("-------------------------------------------------------------------------------------------"+i);
