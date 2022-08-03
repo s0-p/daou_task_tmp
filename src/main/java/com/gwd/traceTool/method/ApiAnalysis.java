@@ -46,18 +46,19 @@ public class ApiAnalysis {
     // api 종류 별, 목적지 host 별, port number 별
     public static Map saveInMap(ArrayList<ApiModel> array) {
 
-        Map<String, Map> urlMap = new HashMap<>();
+        Map<String, Map> dataMap = new HashMap<>();
         Map<String, Integer> hostMap = new HashMap<>();
         Map<String, Integer> portMap = new HashMap<>();
         Map<String, Integer> apiMap = new HashMap<>();
+        Map<String, String> urlMap;
 
         for(int i=0; i<array.size();i++){
             String url = array.get(i).getUrl();
-            Map<String, String> tmpMap = splitUrl(url);
+            urlMap = splitUrl(url);
 
-            String destinationHost = tmpMap.get("destinationHost");
-            String port = tmpMap.get("port");
-            String apiType = tmpMap.get("apiType");
+            String destinationHost = urlMap.get("destinationHost");
+            String port = urlMap.get("port");
+            String apiType = urlMap.get("apiType");
 
             int count = 0;
 
@@ -92,16 +93,16 @@ public class ApiAnalysis {
 
 
         }
-        urlMap.put("destinationHost", hostMap);
-        urlMap.put("port", portMap);
-        urlMap.put("api", apiMap);
+        dataMap.put("destinationHost", hostMap);
+        dataMap.put("port", portMap);
+        dataMap.put("api", apiMap);
 
-        for( String strKey : urlMap.keySet() ){
-            Map strValue = urlMap.get(strKey);
+        for( String strKey : dataMap.keySet() ){
+            Map strValue = dataMap.get(strKey);
             System.out.println( strKey +":"+ strValue );
         }
 
-        return urlMap;
+        return dataMap;
     }
 
     public static void arrayPrint(ArrayList<ApiModel> array){
@@ -117,6 +118,12 @@ public class ApiAnalysis {
                 System.out.println("message : " + x.getMessage());
             }
             System.out.println("body : "+x.getBody());
+            try {
+                System.out.println("folder : "+x.getFolder());
+            }
+            catch (NullPointerException e){
+                System.out.println("folder : NULL");
+            }
             System.out.println();
             i++;
             System.out.println("-------------------------------------------------------------------------------------------"+i);
