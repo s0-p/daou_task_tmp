@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ApiParser {
     public static ApiModel createApiModel(Map<String, String> tmpMap) {
@@ -58,7 +56,7 @@ public class ApiParser {
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
                     LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
-                    apiModel.setOccurrence_time(occurrenceTime);
+                    apiModel.setOccurrenceTime(occurrenceTime);
 
                     subList.add(apiModel);
                 }
