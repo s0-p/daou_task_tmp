@@ -13,19 +13,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ApiParser {
-    public static ApiModel createApiModel(String subStr, String folder) {
+    public static ApiModel createApiModel(Map<String, String> tmpMap) {
         ApiModel apiModel = new ApiModel();
-        List<String> tmpList;
 
-        tmpList = List.of(subStr.split(", code:"));
-        apiModel.setUrl(tmpList.get(0).substring(4));
-        tmpList = List.of(tmpList.get(1).split(",|:"));
-
-        apiModel.setCode(tmpList.get(0));
-        apiModel.setTime(tmpList.get(2));
-        apiModel.setMessage(tmpList.get(4));
-        apiModel.setBody(tmpList.get(6));
-        apiModel.setFolder(folder);
+        apiModel.setUrl(tmpMap.get("url"));
+        apiModel.setCode(tmpMap.get("code"));
+        apiModel.setTime(tmpMap.get("time"));
+        apiModel.setMessage(tmpMap.get("message"));
+        apiModel.setBody(tmpMap.get("body"));
+        apiModel.setFolder(tmpMap.get("folder"));
 
         return apiModel;
     }
@@ -43,16 +39,28 @@ public class ApiParser {
                 if (line.contains(queueRecord)) {
 
                     int i = line.indexOf(queueRecord) + queueRecord.length();
-                    if (i != -1) {
 
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-                        LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
-                        String subStr = line.substring(i);
+                    List<String> tmpList;
+                    tmpList = List.of(line.substring(i).split(", code:"));
 
-                        ApiModel apiModel = createApiModel(subStr, folder);
-                        apiModel.setOccurrence_time(occurrenceTime);
-                        subList.add(apiModel);
-                    }
+                    Map<String, String> tmpMap = new HashMap<>();
+
+                    tmpMap.put("url", tmpList.get(0).substring(4));
+
+                    tmpList = List.of(tmpList.get(1).split(",|:"));
+                    tmpMap.put("code", tmpList.get(0));
+                    tmpMap.put("time", tmpList.get(2).replace("ms", ""));
+                    tmpMap.put("message", tmpList.get(4));
+                    tmpMap.put("body", tmpList.get(6));
+                    tmpMap.put("folder", folder);
+
+                    ApiModel apiModel = createApiModel(tmpMap);
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                    LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
+                    apiModel.setOccurrence_time(occurrenceTime);
+
+                    subList.add(apiModel);
                 }
             }
         } catch (IOException e) {
@@ -71,29 +79,9 @@ public class ApiParser {
         String dags2Path = "C:/Users/User/Desktop/log/dags2/" + path;
         list.addAll(readLine(dags2Path, "2"));
 
-
-
         Collections.sort(list);
 
-        /*int i=0;
-        for(ApiModel x : list){
-            System.out.println("url : "+x.getUrl());
-            System.out.println("code : "+x.getCode());
-            System.out.println("time : "+x.getTime());
-            if(x.getMessage().equals("")){
-                System.out.println("message : NULL");
-            }
-            else{
-                System.out.println("message : " + x.getMessage());
-            }
-            System.out.println("body : "+x.getBody());
-            System.out.println();
-            i++;
-            System.out.println("-------------------------------------------------------------------------------------------"+i);
-            System.out.println();
-        }
-
-        for (ApiModel x: list) {
+        /*for (ApiModel x: list) {
 
             System.out.println(x.getOccurrence_time());
 
