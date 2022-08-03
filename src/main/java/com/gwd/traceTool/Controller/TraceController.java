@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Controller
 public class TraceController {
@@ -43,9 +44,9 @@ public class TraceController {
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
         ApiAnalysis apiAnalysis = new ApiAnalysis();
-        apiAnalysis.analysis(array);
+        Map dataMap = apiAnalysis.analysis(array);
         // apiAnalysis.array는 나중에 사용가능
-        model.addAttribute("array",array);
+        model.addAttribute("dataMap",dataMap);
             return "apiPost";
     }
 }
