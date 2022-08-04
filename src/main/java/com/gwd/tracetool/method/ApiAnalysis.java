@@ -12,18 +12,16 @@ public class ApiAnalysis {
 
         Map<String, Map> apiMap = dataMap.get("api");
         for (Map.Entry<String, Map> entry : apiMap.entrySet()) {
-
             String key = entry.getKey();
             Map<String, Integer> value = entry.getValue();
 
             int totalTime = 0;
-            for(ApiModel model : array) {
+            for (ApiModel model : array) {
 
                 if (model.getUrl().contains(key)) {
                     totalTime = totalTime + Integer.parseInt(model.getTime());
                 }
             }
-
             int AvgTime = totalTime / value.get("count");
             value.put("avgTime", AvgTime);
 
@@ -39,7 +37,7 @@ public class ApiAnalysis {
         String port = tmpList[2].substring(0, 4);
         String apiType = tmpList[2].substring(4);
 
-        if(apiType.contains("OPERATION")) {
+        if (apiType.contains("OPERATION")) {
             int index = apiType.indexOf("/OPERATION");
             apiType = apiType.substring(0, index);
         }
@@ -54,12 +52,10 @@ public class ApiAnalysis {
 
     public static int counter(Map map, String key) {
         if (map.containsKey(key)) {    // map안에 key가 있다면 value 증가
-            return  (int)map.get(key) + 1;
-        }
-        else {                        // map안에 key가 없다면 최초 삽입
+            return (int) map.get(key) + 1;
+        } else {                        // map안에 key가 없다면 최초 삽입
             return 1;
         }
-
     }
 
     public Map analysis(ArrayList<ApiModel> array) {
@@ -72,7 +68,7 @@ public class ApiAnalysis {
         Map<String, Integer> codeMap = new HashMap<>();    // http status code 별 data
         Map<String, String> urlMap;                        // url을 split 한 후 data
 
-        for(int i=0; i<array.size();i++){
+        for (int i = 0; i < array.size(); i++) {
             String url = array.get(i).getUrl();                      // ex) https://inbound-admin.daouoffice.com:8443/api/setting/service/domain/save
             urlMap = splitUrl(url);                                  // ex) {destinationHost=inbound-admin.daouoffice.com, port=8443, apiType=/api/setting/service/domain/save}
             String destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
@@ -83,27 +79,26 @@ public class ApiAnalysis {
 
 
             //  목적지 host 별
-            int count = counter(hostMap,destinationHost);
+            int count = counter(hostMap, destinationHost);
             hostMap.put(destinationHost, count);
 
             //  port number 별
-            count = counter(portMap,port);
+            count = counter(portMap, port);
             portMap.put(port, count);
 
             //  http status code 별
-            count = counter(codeMap,code);
+            count = counter(codeMap, code);
             codeMap.put(code, count);
 
             //  dags server 별
-            count = counter(dagsMap,dags);
+            count = counter(dagsMap, dags);
             dagsMap.put(dags, count);
 
             //  api 종류 별
-            if(apiMap.containsKey(apiType)) {
+            if (apiMap.containsKey(apiType)) {
                 count = (int) apiMap.get(apiType).get("count") + 1;
                 apiMap.get(apiType).put("count", count);
-            }
-            else {
+            } else {
                 Map<String, Integer> apiInfo = new HashMap<>();
                 apiInfo.put("count", 1);
                 apiMap.put(apiType, apiInfo);
@@ -118,7 +113,7 @@ public class ApiAnalysis {
         dataMap.put("httpStatusCode", codeMap);
         dataMap.put("dagServer", dagsMap);
 
-        return getAvgTime(array,dataMap);
+        return getAvgTime(array, dataMap);
     }
 
 }
