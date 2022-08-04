@@ -58,31 +58,29 @@ public class EventParser {
         return subArray;
     }
 
-    public static String getEventName(Map map) {
-        Map map2 = (Map) map.get("header");
-        Map map3 = (Map) map2.get("event");
-        return (String) map3.get("eventName");
+    public static String getEventName(Map map){
+        Map map2 = (Map)map.get("header");
+        Map map3 = (Map)map2.get("event");
+        return (String)map3.get("eventName");
+    }
+    public static String getCreateAt(Map map){
+        Map map2 = (Map)map.get("header");
+        Map map3 = (Map)map2.get("event");
+        return (String)map3.get("createAt");
     }
 
-    public static String getCreateAt(Map map) {
-        Map map2 = (Map) map.get("header");
-        Map map3 = (Map) map2.get("event");
-        return (String) map3.get("createAt");
+    public static String getTransactionId(Map map){
+        Map map2 = (Map)map.get("header");
+        Map map3 = (Map)map2.get("workflow");
+        return (String)map3.get("transactionId");
     }
-
-    public static String getTransactionId(Map map) {
-        Map map2 = (Map) map.get("header");
-        Map map3 = (Map) map2.get("workflow");
-        return (String) map3.get("transactionId");
-    }
-
-    public static String getStatusCode(Map map) {
-        Map map2 = (Map) map.get("header");
-        Map map3 = (Map) map2.get("amqResponseInfo");
+    public static String getStatusCode(Map map){
+        Map map2 = (Map)map.get("header");
+        Map map3 = (Map)map2.get("amqResponseInfo");
         String httpStatusCode;
         try {
-            httpStatusCode = (String) map3.get("httpStatusCode").toString();
-        } catch (NullPointerException e) {
+            httpStatusCode = (String)map3.get("httpStatusCode").toString();
+        }catch (NullPointerException e){
             httpStatusCode = "NULL";
         }
         return httpStatusCode;
@@ -98,7 +96,7 @@ public class EventParser {
     }
 
 
-    public JSONArray readEvent(String path) throws JsonProcessingException {
+        public JSONArray readEvent(String path) throws JsonProcessingException{
 
         JSONArray array = new JSONArray();
 
@@ -113,25 +111,25 @@ public class EventParser {
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> parsingData = new HashMap<>();
-        int i = 0;
-        for (Object x : array) {
+        int i =0;
+        for (Object x : array){
             JSONObject jsonObject = (JSONObject) x;
             Map map = mapper.readValue(jsonObject.toString(), Map.class);
-            parsingData.put("eventName", getEventName(map));
-            parsingData.put("createAt", getCreateAt(map));
-            parsingData.put("transactionId", getTransactionId(map));
-            parsingData.put("httpStatusCode", getStatusCode(map));
+            parsingData.put("eventName",getEventName(map));
+            parsingData.put("createAt",getCreateAt(map));
+            parsingData.put("transactionId",getTransactionId(map));
+            parsingData.put("httpStatusCode",getStatusCode(map));
 
             Iterator<String> iterator = parsingData.keySet().iterator();
             while (iterator.hasNext()) {
                 String key = iterator.next();
-                String value = (String) parsingData.get(key);
-                System.out.println("key : " + key);
-                System.out.println("value : " + value);
+                String value = (String)parsingData.get(key);
+                System.out.println("key : "+key);
+                System.out.println("value : "+value);
                 System.out.println();
             }
             i++;
-            System.out.println("-------------------------------------" + i);
+            System.out.println("-------------------------------------"+i);
         }
 
         /*for(Object x : array){

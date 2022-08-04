@@ -1,0 +1,7 @@
+tools:
+  log-path:
+    base: C:\Users\DAOU\Desktop\log
+    dags1: C:\Users\DAOU\Desktop\log\dags1
+    dags2: C:\Users\DAOU\Desktop\log\dags2
+    dems1: C:\Users\DAOU\Desktop\log\dems1
+    dems2: C:\Users\DAOU\Desktop\log\dems2

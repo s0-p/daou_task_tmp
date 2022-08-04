@@ -6,6 +6,7 @@ import java.util.Date;
 
 
 @ToString
+
 public class ApiModel implements Comparable<ApiModel> {
     private LocalDateTime occurrenceTime;
     private String folder;
@@ -21,6 +22,7 @@ public class ApiModel implements Comparable<ApiModel> {
 
     public void setOccurrenceTime(LocalDateTime occurrence_time) {
         this.occurrenceTime = occurrence_time;
+
     }
 
     public String getFolder() {
