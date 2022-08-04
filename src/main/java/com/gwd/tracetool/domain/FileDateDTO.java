@@ -1,4 +1,4 @@
-package com.gwd.traceTool.domain;
+package com.gwd.tracetool.domain;
 
 public class FileDateDTO {
     String fileDate;
