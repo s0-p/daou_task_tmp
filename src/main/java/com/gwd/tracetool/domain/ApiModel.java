@@ -1,8 +1,7 @@
-package com.gwd.traceTool.domain;
+package com.gwd.tracetool.domain;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @ToString

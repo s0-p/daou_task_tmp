@@ -1,6 +1,7 @@
-package com.gwd.traceTool.method;
+package com.gwd.tracetool.method;
 
-import com.gwd.traceTool.domain.ApiModel;
+import com.gwd.tracetool.domain.ApiModel;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,8 +10,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ApiParser {
     public static ApiModel createApiModel(Map<String, String> tmpMap) {
@@ -26,6 +25,7 @@ public class ApiParser {
         return apiModel;
     }
 
+    @ExceptionHandler(value = IOException.class)
     public static ArrayList readLine(String path, String folder) {
         ArrayList<ApiModel> subList = new ArrayList<ApiModel>();
 
