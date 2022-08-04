@@ -1,4 +1,5 @@
 package com.gwd.traceTool.domain;
+
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -6,7 +7,7 @@ import java.util.Date;
 
 
 @ToString
-public class ApiModel implements Comparable<ApiModel>{
+public class ApiModel implements Comparable<ApiModel> {
     private LocalDateTime occurrenceTime;
     private String folder;
     private String url;

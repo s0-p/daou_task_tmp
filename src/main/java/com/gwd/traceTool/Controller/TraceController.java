@@ -17,10 +17,11 @@ public class TraceController {
     ApiParser apiParser;
     ApiAnalysis apiAnalysis;
 
-    Map<String , Map> dataMap;
+    Map<String, Map> dataMap;
+
     @GetMapping("/api/analyze/trace-log")
 
-    public String home(){
+    public String home() {
         /*String path = "dags_feign.2022-07-14.log";
         apiParser = new ApiParser();
         apiParser.readApi(path);*/
@@ -38,9 +39,9 @@ public class TraceController {
 
 
     @PostMapping("/api/analyze/trace-log")
-    public String read(FileDateDTO fileDateDTO, Model model){
+    public String read(FileDateDTO fileDateDTO, Model model) {
         String fileDate = fileDateDTO.getFileDate();  // POST request로 받은 date input value
-        String fileName = "dags_feign." + fileDate+".log";
+        String fileName = "dags_feign." + fileDate + ".log";
 
 
         ArrayList<ApiModel> array = apiParser.readApi(fileName);
@@ -51,7 +52,7 @@ public class TraceController {
             return "apiPost";
 
          */
-        model.addAttribute("dataMap",dataMap);
-            return "statics";
+        model.addAttribute("dataMap", dataMap);
+        return "statics";
     }
 }

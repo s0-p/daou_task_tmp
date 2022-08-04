@@ -29,6 +29,7 @@ public class ApiParser {
 
         File file = new File(path);
         String queueRecord = "[Feign Response] ";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -54,7 +55,6 @@ public class ApiParser {
 
                     ApiModel apiModel = createApiModel(tmpMap);
 
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
                     LocalDateTime occurrenceTime = LocalDateTime.parse(line.substring(0, 23), formatter);
                     apiModel.setOccurrenceTime(occurrenceTime);
 

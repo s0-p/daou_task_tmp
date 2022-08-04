@@ -10,8 +10,9 @@
 <div th:each="data:${dataMap}" class="data">
   <div class="title"><span th:text =${data.key}></span><span> 종류별 통계</span></div>
     <div th:if="${data.key=='api'}" th:each="subData:${data.value}">
+      <span th:text="${subData.key}"> </span><span> : </span>
       <div th:each="apiData:${subData.value}">
-        <span th:text="${subData.key}"> </span><span> : </span> <span th:text="${apiData.key}"> </span> <span th:text="${apiData.value}"> </span>
+        <span th:text="${apiData.key}"> </span> <span th:text="${apiData.value}"> </span>
       </div>
     </div>
     <div th:if="${data.key != 'api'}" th:each="subData:${data.value}">
