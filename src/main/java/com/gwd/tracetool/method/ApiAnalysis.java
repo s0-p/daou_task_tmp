@@ -1,9 +1,7 @@
-package com.gwd.traceTool.method;
+package com.gwd.tracetool.method;
 
-import com.gwd.traceTool.domain.ApiModel;
-import org.w3c.dom.css.Counter;
+import com.gwd.tracetool.domain.ApiModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

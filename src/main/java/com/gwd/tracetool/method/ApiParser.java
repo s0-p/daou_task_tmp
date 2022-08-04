@@ -1,6 +1,6 @@
-package com.gwd.traceTool.method;
+package com.gwd.tracetool.method;
 
-import com.gwd.traceTool.domain.ApiModel;
+import com.gwd.tracetool.domain.ApiModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ApiParser {
     public static ApiModel createApiModel(String subStr) {

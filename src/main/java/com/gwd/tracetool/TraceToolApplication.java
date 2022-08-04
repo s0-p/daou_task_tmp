@@ -1,4 +1,4 @@
-package com.gwd.traceTool;
+package com.gwd.tracetool;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
