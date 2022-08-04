@@ -1,6 +1,6 @@
-package com.gwd.traceTool.method;
+package com.gwd.tracetool.method;
 
-import com.gwd.traceTool.domain.ApiModel;
+import com.gwd.tracetool.domain.ApiModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class ApiAnalysis {
         }
     }
 
-    public static Map analysis(ArrayList<ApiModel> array) {
+    public Map analysis(ArrayList<ApiModel> array) {
 
         Map<String, Map> dataMap = new HashMap<>();        // 최종 output data
         Map<String, Integer> hostMap = new HashMap<>();    // 목적지 host 종류 별 data

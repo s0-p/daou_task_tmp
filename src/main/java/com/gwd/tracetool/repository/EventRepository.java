@@ -1,6 +1,6 @@
-package com.gwd.traceTool.repository;
+package com.gwd.tracetool.repository;
 
-import com.gwd.traceTool.domain.EventModel;
+import com.gwd.tracetool.domain.EventModel;
 
 public interface EventRepository {
 

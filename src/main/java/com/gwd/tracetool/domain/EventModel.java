@@ -1,4 +1,4 @@
-package com.gwd.traceTool.domain;
+package com.gwd.tracetool.domain;
 
 public class EventModel {
     private String eventName;
