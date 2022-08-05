@@ -1,20 +1,20 @@
-package com.gwd.traceTool.Controller;
+package com.gwd.tracetool.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.gwd.traceTool.domain.ApiModel;
-import com.gwd.traceTool.domain.FileDateDTO;
-import com.gwd.traceTool.method.*;
+import com.gwd.tracetool.domain.ApiModel;
+import com.gwd.tracetool.domain.FileDateDTO;
+import com.gwd.tracetool.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TraceController {
     EventParser eventParser;
-    ApiParser apiParser;
+    ApiParserService apiParser;
     ApiAnalysis apiAnalysis;
     @GetMapping("/api/analyze/trace-log")
 
@@ -41,7 +41,7 @@ public class TraceController {
         String fileName = "dags_feign." + fileDate+".log";
 
 
-        ArrayList<ApiModel> array = apiParser.readApi(fileName);
+        List<ApiModel> array = apiParser.readApi(fileName);
         apiAnalysis = new ApiAnalysis();
         apiAnalysis.analysis(array);
         // apiAnalysis.array는 나중에 사용가능

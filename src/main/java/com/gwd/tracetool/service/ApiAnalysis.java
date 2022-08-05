@@ -1,16 +1,14 @@
-package com.gwd.traceTool.method;
+package com.gwd.tracetool.service;
 
-import com.gwd.traceTool.domain.ApiModel;
-import org.w3c.dom.css.Counter;
+import com.gwd.tracetool.domain.ApiModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ApiAnalysis {
-    public void analysis(ArrayList<ApiModel> array){ //분석
-        arrayPrint(array);
+    public void analysis(List<ApiModel> array){ //분석
 
         Map<String, Integer> hostMap = new HashMap<>();
         Map<String, Integer> portMap = new HashMap<>();
@@ -25,7 +23,7 @@ public class ApiAnalysis {
             String destinationHost = urlMap.get("destinationHost");  // ex) inbound-admin.daouoffice.com
             String port = urlMap.get("port");  // ex) 8443
             String apiType = urlMap.get("apiType"); // ex) /api/setting/service/domain/save
-            String code = array.get(i).getCode();
+            int code = array.get(i).getCode();
 
             int count = 0;
 
@@ -64,7 +62,7 @@ public class ApiAnalysis {
             else {
                 count = 1;
             }
-            codeMap.put(code,count);
+            //codeMap.put(code,count);
 
         }
         for( String strKey : hostMap.keySet() ){
