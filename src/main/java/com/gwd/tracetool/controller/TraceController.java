@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 public class TraceController {
-    EventParser eventParser;
+    //EventParser eventParser;
     ApiParserService apiParser;
     ApiAnalysis apiAnalysis;
     @GetMapping("/api/analyze/trace-log")
@@ -23,7 +23,7 @@ public class TraceController {
         apiParser = new ApiParser();
         apiParser.readApi(path);*/
         String path = "dems.2022-07-14.log";
-        eventParser = new EventParser();
+        //eventParser = new EventParser();
 //        try {
 //            eventParser.readEvent(path);
 //        } catch (JsonProcessingException e) {
